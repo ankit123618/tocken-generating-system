@@ -1,10 +1,15 @@
-.adminbtn
+body{
+    background: url("../pictures/wallpaperbetter.com_1366x768.jpg");
+    color:rgb(59, 59, 59);
+}
+
+.opbtn
 {
  display: flex;
  justify-content: center;
 }
 
-.btn
+.btns
 {
  background-color: dodgerblue; 
  padding:18px 25px;
@@ -16,13 +21,20 @@ font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans
 font-size: 15px;
 }
 
-input[type="text"],input[type="password"]
+input
 {
 margin-top: 5px;
 padding:15px 20px;
-border:0px;
+border: solid 1px black;
 outline: 0px;
 } 
+
+::-webkit-inner-spin-button{
+    display: none;
+}
+.modal-header{
+    background: linear-gradient(orangered,white,green);
+}
 
     
 
