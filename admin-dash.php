@@ -37,12 +37,15 @@ if ($_SESSION['username'] != "admin")
         <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="verified-data">प्रमाणित किसान</button>
         <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="unverified-data">अप्रमाणित किसान</button>
         <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="deleted-data">हटाये गये किसान</button>
-        <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="vitrankendra-data">वितरण केंद्र अनुसार</button>
-        <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="date-data">तारीख अनुसार</button>
+        <!-- <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="vitrankendra-data">वितरण केंद्र अनुसार</button>
+        <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="date-data">तारीख अनुसार</button> -->
     </div>
 
     <!-- alert box to show responses -->
     <div class="alert" id="message-box">
+        
+        <!-- VITRAN KENDRA ANUSAAR  -->
+
         <!-- verified data table -->
         <table class="table-responsive data-tables" id="verified-data-table">
             <th class="bg-success text-white p-3 mb-2">प्रमाणित किसान</th>

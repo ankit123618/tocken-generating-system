@@ -179,6 +179,22 @@ function showData(ele) {
         else
             show.style.display = "none"
     }
+    // else if (bid === "vitrankendra-data") {
+    //     const show = document.getElementById("vitran-btn")
+    //     if (show.style.display === "none") {
+    //         show.style.display = "block"
+    //     }
+    //     else
+    //         show.style.display = "none"
+    // }
+    // else if (bid === "date-data") {
+    //     const show = document.getElementById("date-btn")
+    //     if (show.style.display === "none") {
+    //         show.style.display = "block"
+    //     }
+    //     else
+    //         show.style.display = "none"
+    // }
 }
 
 /*
