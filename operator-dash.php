@@ -28,7 +28,7 @@ if ($_SESSION['username'] != "op1")
     <!-- operational button -->
     <div class="opbtn progress-bar">
         <button class="btns btn btn-success border-5 p-3 mb-5" data-bs-toggle="modal" data-bs-target="#tokenBackdrop" onclick="kisaanScript(this)" id="fromop">नया टोकन</button>
-        <button class="btns btn btn-success border-5 p-3 mb-5" id="token-request" onclick="showData(this)" id="all-data">टोकन की याचिकाएं</button>
+        <button class="btns btn btn-success border-5 p-3 mb-5" onclick="showData(this)" id="all-data">टोकन की याचिकाएं</button>
     </div>
     <!-- Modal  new token form - generate token -->
     <div class="modal fade" id="tokenBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -136,8 +136,8 @@ if ($_SESSION['username'] != "op1")
                 $samagra = $row['samagra'];
                 $date = $row['date'];
                 $status = $row['status'];
-                $ta = $row['timealloted'];
-                $da = $row['datealloted'];
+                // $ta = $row['timealloted'];
+                // $da = $row['datealloted'];
             ?>
 
                 <tr>
@@ -150,10 +150,10 @@ if ($_SESSION['username'] != "op1")
                     <td><input type="number" value="<?php echo $bahi; ?>" name="bahi"></td>
                     <td><input type="number" value="<?php echo $samagra; ?>" name="samagra"></td>
                     <td><input type="text" value="<?php echo $date; ?> " disabled name="date"></td>
-                    <td><input type="text" value="<?php echo $da; ?> " name="da"></td>
-                    <td><input type="text" value="<?php echo $ta; ?> " name="ta"></td>
+                    <td><input type="text" value="<?php echo $da; ?> " name="da" hidden></td>
+                    <td><input type="text" value="<?php echo $ta; ?> " name="ta" hidden></td>
                     <td>
-                        <select name="status">
+                        <select name="status" id="status">
                             <option value="<?php echo $status; ?>">लंबित</option>
                             <option value="verified">प्रमाणित</option>
                             <option value="unverified">अप्रमाणित</option>

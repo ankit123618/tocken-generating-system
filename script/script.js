@@ -213,7 +213,7 @@ function status(ele) {
     const rakva = ele.dataset.rakva
     const date = ele.dataset.date
     const vitrank = ele.dataset.vitrank
-    const status = ele.dataset.status
+    const status = document.getElementById("status")
     const ta = ele.dataset.ta
     const da = ele.dataset.da
 
@@ -258,19 +258,12 @@ function status(ele) {
         if (xhr.readyState == 4 && xhr.status == 200) {
             console.log(xhr.responseText);
             response[0].innerHTML = xhr.responseText
-            // table.style.display = "block"
-
-
-            // response shows for 5 seconds
-            setTimeout(() => {
-                response[0].style.display = "none"
-                // table.style.display = "none"
-
-                // row.style.display = "none"
-            }, 5000);
-
-            // kisaanModal.style.display = 'none'
-            // backdrop[0].style.display = 'none'
+            
+            // // response shows for 5 seconds
+            // setTimeout(() => {
+            //     response[0].style.display = "none"
+            //     window.location("operator-dash.php");
+            // }, 5000);
         }
     }
 
