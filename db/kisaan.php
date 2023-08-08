@@ -20,6 +20,7 @@ $sid = $_POST['sid'];
 $bahi = $_POST['bahi'];
 $rakva = $_POST['rakva'];
 $tahseel = $_POST['tahseel'];
+$gram = $_POST['gram'];
 $vitrank = $_POST['vitrank'];
 
 $current_date = new DateTime();
@@ -34,7 +35,7 @@ $data = mysqli_fetch_all($result);
 if(count($data) <= 140){
 
     // INSERTING KISAAN DATA INTO DATABASE
-    $insert = "INSERT INTO `kisaan` (`name`, `samagra`, `bahi`, `phone`, `rakva`, `tahseel`, `vitrankendra`) VALUES ('$name', $sid, $bahi, $phone, $rakva, '$tahseel', '$vitrank')";
+    $insert = "INSERT INTO `kisaan` (`name`, `samagra`, `bahi`, `phone`, `rakva`, `tahseel`, `gram`, `vitrankendra`) VALUES ('$name', $sid, $bahi, $phone, $rakva, '$tahseel', '$gram', '$vitrank')";
     $status = mysqli_query($connection, $insert);
     
     

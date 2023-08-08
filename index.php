@@ -67,7 +67,7 @@
                                     <td><input type="text" name="rakva" pattern="[0-9]+(\.[0-9]+)?"></td>
                                 </tr>
                                 <tr>
-                                    <th>तहसील ग्राम</th>
+                                    <th>तहसील</th>
                                     <td>
                                         <select name="tahseel">
                                             <option value="select">अपनी तहसील चुने</option>
@@ -78,6 +78,10 @@
                                             <option value="karelisaainkheda">करेली साईंखेड़ा</option>
                                         </select>
                                     </td>
+                                </tr>
+                                <tr>
+                                    <th>ग्राम</th>
+                                    <td><input type="text" name="gram"></td>
                                 </tr>
                                 <tr>
                                     <th>वितरण केंद्र का नाम</th>

@@ -28,7 +28,7 @@ if ($_SESSION['username'] != "op1")
     <!-- operational button -->
     <div class="opbtn progress-bar">
         <button class="btns btn btn-success border-5 p-3 mb-5" data-bs-toggle="modal" data-bs-target="#tokenBackdrop" onclick="kisaanScript(this)" id="fromop">नया टोकन</button>
-        <button class="btns btn btn-success border-5 p-3 mb-5" onclick="showData(this)" id="all-data">टोकन की याचिकाएं</button>
+        <button class="btns btn btn-success border-5 p-3 mb-5" onclick="showData(this)" id="op-all-data">टोकन की याचिकाएं</button>
     </div>
     <!-- Modal  new token form - generate token -->
     <div class="modal fade" id="tokenBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -62,7 +62,7 @@ if ($_SESSION['username'] != "op1")
                                 <td><input type="text" name="rakva" pattern="[0-9]+(\.[0-9]+)?"></td>
                             </tr>
                             <tr>
-                                <th>तहसील ग्राम</th>
+                                <th>तहसील</th>
                                 <td>
                                     <select name="tahseel">
                                         <option value="select">तहसील चुने</option>
@@ -73,6 +73,10 @@ if ($_SESSION['username'] != "op1")
                                         <option value="karelisaainkheda">करेली साईंखेड़ा</option>
                                     </select>
                                 </td>
+                            </tr>
+                            <tr>
+                                <th>ग्राम</th>
+                                <td><input type="text" name="gram"></td>
                             </tr>
                             <tr>
                                 <th>वितरण केंद्र का नाम</th>
@@ -100,75 +104,79 @@ if ($_SESSION['username'] != "op1")
     <div class="alert" id="message-box">
 
         <!-- Data table by default is hide -->
-        <table class="table-responsive data-tables" id="data-table">
-            <tr class="bg-success text-white">
-                <th></th>
-                <th>नाम</th>
-                <th>फोन</th>
-                <th>तहसील ग्राम</th>
-                <th>वितरण केंद्र का नाम</th>
-                <th>बही अनुसार रकवा</th>
-                <th>बही क्रमांक</th>
-                <th>समग्र</th>
-                <th>तारीख</th>
-                <th>दिया गया समय </th>
-                <th>दी गयी तारिख</th>
-                <th>स्थिति</th>
+        <table class="table-responsive data-tables" id="op-data-table">
 
-            </tr>
 
 
             <?php
             $select = "select * from kisaan where status = 'pending'";
             $result = mysqli_query($connection, $select);
             $num = mysqli_num_rows($result);
-            for ($i = 0; $i < $num; $i++) {
-                $row = mysqli_fetch_array($result);
+            if ($num != 0) {
 
-                // TAKEN THE DATA VALUE IN VARIABLES
-                $token = $row['token'];
-                $name = $row['name'];
-                $phone = $row['phone'];
-                $tahseel = $row['tahseel'];
-                $vitrank = $row['vitrankendra'];
-                $rakva = $row['rakva'];
-                $bahi = $row['bahi'];
-                $samagra = $row['samagra'];
-                $date = $row['date'];
-                $status = $row['status'];
-                // $ta = $row['timealloted'];
-                // $da = $row['datealloted'];
-            ?>
+                echo "<tr class='bg-success text-white'>
+                    <th></th>
+                    <th>नाम</th>
+                    <th>फोन</th>
+                    <th>तहसील</th>
+                    <th>ग्राम</th>
+                    <th>वितरण केंद्र का नाम</th>
+                    <th>बही अनुसार रकवा</th>
+                    <th>बही क्रमांक</th>
+                    <th>समग्र</th>
+                    <th>तारीख</th>
+                    
+                    <th>स्थिति</th>
+                    <th>कारण</th> 
+                </tr>";
+                for ($i = 0; $i < $num; $i++) {
+                    $row = mysqli_fetch_array($result);
 
-                <tr>
-                    <td><input type="number" value="<?php echo $token; ?>" hidden name="token"></td>
-                    <td><input type="text" value="<?php echo $name; ?>" name="name"></td>
-                    <td><input type="number" value="<?php echo $phone; ?>" name="phone"></td>
-                    <td><input type="text" value="<?php echo $tahseel; ?>" name="tahseel"></td>
-                    <td><input type="text" value="<?php echo $vitrank; ?>" name="vitrank"></td>
-                    <td><input type="text" value="<?php echo $rakva; ?>" pattern="[0-9]+(\.[0-9]+)?" name="rakva"></td>
-                    <td><input type="number" value="<?php echo $bahi; ?>" name="bahi"></td>
-                    <td><input type="number" value="<?php echo $samagra; ?>" name="samagra"></td>
-                    <td><input type="text" value="<?php echo $date; ?> " disabled name="date"></td>
-                    <td><input type="text" value="<?php echo $da; ?> " name="da" hidden></td>
-                    <td><input type="text" value="<?php echo $ta; ?> " name="ta" hidden></td>
+                    // TAKEN THE DATA VALUE IN VARIABLES
+                    $token = $row['token'];
+                    $name = $row['name'];
+                    $phone = $row['phone'];
+                    $tahseel = $row['tahseel'];
+                    $vitrank = $row['vitrankendra'];
+                    $rakva = $row['rakva'];
+                    $bahi = $row['bahi'];
+                    $samagra = $row['samagra'];
+                    $date = $row['date'];
+                    $status = $row['status'];
+                    $reason = $row['reason'];
+                    $gram = $row['gram'];
+
+                    echo "<tr>
+                    <td><input type='number' value='$token' hidden id = 'token' name='token'></td>
+                    <td><input type='text' value='$name' id = 'name' name='name'></td>
+                    <td><input type='number' value='$phone' id = 'phone' name='phone'></td>
+                    <td><input type='text' value='$tahseel' id = 'tahseel' name='tahseel'></td>
+                    <td><input type='text' id = 'gram' name='gram' value='$gram'></td>
+                    <td><input type='text' value='$vitrank' id = 'vitrank' name='vitrank'></td>
+                    <td><input type='text' value='$rakva' pattern='[0-9]+(\.[0-9]+)?' id = 'rakva' name='rakva'></td>
+                    <td><input type='number' value='$bahi' id = 'bahi' name='bahi'></td>
+                    <td><input type='number' value='$samagra' id = 'samagra' name='samagra'></td>
+                    <td><input type='text' value='$date ' disabled id = 'date' name='date'></td>
                     <td>
-                        <select name="status" id="status">
-                            <option value="<?php echo $status; ?>">लंबित</option>
-                            <option value="verified">प्रमाणित</option>
-                            <option value="unverified">अप्रमाणित</option>
-                            <option value="deleted">हटाएं</option>
+                        <select name='status' id='status' onchange='toggleRB()'>
+                            <option value='$status'>लंबित</option>
+                            <option value='verified'>प्रमाणित</option>
+                            <option value='unverified'>अप्रमाणित</option>
+                            <option value='deleted'>हटाएं</option>
                         </select>
-
+                    </td>
+                    <td><textarea name='reason' id='reason' cols='30' rows='5' placeholder='यदि आपने किसान को प्रामाणित नही किया है, तो कारण और स्थिती को समझाएं'></textarea></td>
                     <td>
-                        <button class="btn btn-success" onclick="status(this)" id="update" data-id='<?php echo $token; ?>' data-name='<?php echo $name ?>' data-phone="<?php echo $phone ?>" data-tahseel="<?php echo $tahseel ?>" data-vitrank="<?php echo $vitrankendra ?>" data-rakva="<?php echo $rakva ?>" data-bahi="<?php echo $bahi ?>" data-samagra="<?php echo $samagra ?>" data-date="<?php echo $date ?>" data-status="<?php echo $status; ?>" data-da="<?php echo $da; ?>" data-ta="<?php echo $ta; ?>">
+                        <button class='btn btn-success' onclick='status(this)' id='update' data-id='$token' data-name='$name' data-phone='$phone' data-tahseel='$tahseel' data-vitrank='$vitrank' data-rakva='$rakva' data-bahi='$bahi' data-samagra='$samagra' data-date='$date' data-status='$status' data-gram='$gram'>
                             सत्यापित करें
                         </button>
                     </td>
-                    
-                </tr>
-            <?php } ?>
 
+                </tr>";
+                }
+            } else
+                echo "<tr><th>no pending data</th></tr>";
+            ?>
         </table>
 
     </div>

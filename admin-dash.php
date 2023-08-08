@@ -18,8 +18,8 @@ if ($_SESSION['username'] != "admin")
     <title>Admin Dashboard</title>
     <!-- <link rel="stylesheet" href="../bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-
     <link rel="stylesheet" href="css/design.css">
+
 </head>
 
 <body>
@@ -31,26 +31,85 @@ if ($_SESSION['username'] != "admin")
 
     <!-- DROP DOWN TO SHOW THE LIST OF REPORTS -->
 
+    
+
     <!-- TO BE OPTIMISED -->
     <div class="progress-bar">
-        <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="all-data">सम्पूर्ण किसान</button>
+        <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="ad-all-data">सम्पूर्ण किसान</button>
         <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="verified-data">प्रमाणित किसान</button>
         <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="unverified-data">अप्रमाणित किसान</button>
         <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="deleted-data">हटाये गये किसान</button>
-        <!-- <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="vitrankendra-data">वितरण केंद्र अनुसार</button>
-        <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="date-data">तारीख अनुसार</button> -->
+        <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="sms-data">सन्देश के लिए</button>
+        <!-- <button class="btns btn btn-success border-5 p-3 mb-5 text-white" onclick="showData(this)" id="date-data">तारीख अनुसार</button> -->
     </div>
 
     <!-- alert box to show responses -->
     <div class="alert" id="message-box">
-        
-        <!-- VITRAN KENDRA ANUSAAR  -->
+
+        <!-- SMS TABLE  -->
+        <table class="table-responsive data-tables" id="sms-data-table">
+
+
+
+            <?php
+            $select = "select * from kisaan";
+            $result = mysqli_query($connection, $select);
+            $num = mysqli_num_rows($result);
+            if ($num != 0) {
+
+                echo "<tr class='bg-success text-white'>
+                    <th>नाम</th>
+                    <th>फोन</th>
+                    <th>सन्देश</th>
+                </tr>";
+                for ($i = 0; $i < $num; $i++) {
+                    $row = mysqli_fetch_array($result);
+
+                    // TAKEN THE DATA VALUE IN VARIABLES
+
+                    $name = $row['name'];
+                    $phone = $row['phone'];
+                    $message = $row['message'];
+
+                    echo "<tr>
+                    
+                    <td><input type='text' value='$name' id = 'name' name='name'></td>
+                    <td><input type='number' value='$phone' id = 'phone' name='phone'></td>
+                    <td><input type='text' value='$message' id = 'message' name='message'></td>
+                    
+                </tr>";
+                }
+                echo "<td>
+                <form action='db/download-data.php' method='get'>
+                    <input type='text' name='table' value='sms' hidden>
+                    <input type='submit' value='download as excel'>
+                </form>
+            </td>";
+            } else
+                echo "<tr><th>no data</th></tr>";
+            ?>
+        </table>
 
         <!-- verified data table -->
         <table class="table-responsive data-tables" id="verified-data-table">
-            <th class="bg-success text-white p-3 mb-2">प्रमाणित किसान</th>
+            <tr>
+                <th>टोकन</th>
+                <th>नाम</th>
+                <th>फोन</th>
+                <th>तहसील</th>
+                <th>ग्राम</th>
+                <th>वितरण केंद्र का नाम</th>
+                <th>बही अनुसार रकवा</th>
+                <th>बही क्रमांक</th>
+                <th>समग्र</th>
+                <th>तारीख</th>
+
+                <th>दिया गया समय </th>
+                <th>दी गयी तारिख</th>
 
 
+
+            </tr>
             <?php
             $select = "select * from kisaan where status = 'verified'";
             $result = mysqli_query($connection, $select);
@@ -64,12 +123,13 @@ if ($_SESSION['username'] != "admin")
                 $name = $row['name'];
                 $phone = $row['phone'];
                 $tahseel = $row['tahseel'];
+                $gram = $row['gram'];
                 $vitrank = $row['vitrankendra'];
                 $rakva = $row['rakva'];
                 $bahi = $row['bahi'];
                 $samagra = $row['samagra'];
                 $date = $row['date'];
-                $status = $row['status'];
+
                 $ta = $row['timealloted'];
                 $da = $row['datealloted'];
 
@@ -77,29 +137,13 @@ if ($_SESSION['username'] != "admin")
 
             ?>
 
-                <tr>
-                    <th></th>
-                    <th>नाम</th>
-                    <th>फोन</th>
-                    <th>तहसील ग्राम</th>
-                    <th>वितरण केंद्र का नाम</th>
-                    <th>बही अनुसार रकवा</th>
-                    <th>बही क्रमांक</th>
-                    <th>समग्र</th>
-                    <th>तारीख</th>
-
-                    <th>दिया गया समय </th>
-                    <th>दी गयी तारिख</th>
-                    <th>स्थिति</th>
-
-
-                </tr>
 
                 <tr>
-                    <td><input type="number" value="<?php echo $token; ?>" hidden name="token"></td>
+                    <td><input type="number" value="<?php echo $token; ?>" name="token"></td>
                     <td><input type="text" value="<?php echo $name; ?>" name="name"></td>
                     <td><input type="number" value="<?php echo $phone; ?>" name="phone"></td>
                     <td><input type="text" value="<?php echo $tahseel; ?>" name="tahseel"></td>
+                    <td><input type="text" value="<?php echo $gram; ?>" name="gram"></td>
                     <td><input type="text" value="<?php echo $vitrank; ?>" name="vitrank"></td>
                     <td><input type="text" value="<?php echo $rakva; ?>" pattern="[0-9]+(\.[0-9]+)?" name="rakva"></td>
                     <td><input type="number" value="<?php echo $bahi; ?>" name="bahi"></td>
@@ -107,28 +151,8 @@ if ($_SESSION['username'] != "admin")
                     <td><input type="text" value="<?php echo $date; ?> " disabled name="date"></td>
                     <td><input type="text" value="<?php echo $da; ?> " name="da"></td>
                     <td><input type="text" value="<?php echo $ta; ?> " name="ta"></td>
-                    <td>
-                        <select name="status">
-                            <option value="<?php echo $status; ?>">लंबित</option>
-                            <option value="verified">प्रमाणित</option>
-                            <option value="unverified">अप्रमाणित</option>
-                            <option value="deleted">हटाएं</option>
-                        </select>
-
-                    <td>
-                        <button class="btn btn-success" onclick="status(this)" id="update" data-id='<?php echo $token; ?>' data-name='<?php echo $name ?>' data-phone="<?php echo $phone ?>" data-tahseel="<?php echo $tahseel ?>" data-vitrank="<?php echo $vitrankendra ?>" data-rakva="<?php echo $rakva ?>" data-bahi="<?php echo $bahi ?>" data-samagra="<?php echo $samagra ?>" data-date="<?php echo $date ?>" data-status="<?php echo $status; ?>" data-da="<?php echo $da; ?>" data-ta="<?php echo $ta; ?>">
-                            सत्यापित करें
-                        </button>
-                    </td>
                 </tr>
                 <tr>
-                    <td>
-                        <form action="db/download-data.php" method="get">
-                            <input type="text" name="table" value="verified" hidden>
-                            <input type="submit" value="download as excel">
-                        </form>
-                        <button onclick="downloadSheet(this)" id="download-verified" class="bg-gradient bg-warning p-3" data-id='<?php echo $token; ?>' data-name='<?php echo $name ?>' data-phone="<?php echo $phone ?>" data-tahseel="<?php echo $tahseel ?>" data-vitrank="<?php echo $vitrankendra ?>" data-rakva="<?php echo $rakva ?>" data-bahi="<?php echo $bahi ?>" data-samagra="<?php echo $samagra ?>" data-date="<?php echo $date ?>" data-status="<?php echo $status; ?>" data-da="<?php echo $da; ?>" data-ta="<?php echo $ta; ?>">जानकारी डाउनलोड करें</button>
-                    </td>
 
                 </tr>
             <?php
@@ -136,12 +160,35 @@ if ($_SESSION['username'] != "admin")
 
             }
             ?>
+            <td>
+                <form action="db/download-data.php" method="get">
+                    <input type="text" name="table" value="verified" hidden>
+                    <input type="submit" value="download as excel">
+                </form>
+            </td>
         </table>
 
         <!-- unverified data table -->
         <table class="table-responsive data-tables" id="unverified-data-table">
-            <th class="bg-success text-white p-3 mb-2">अप्रमाणित किसान</th>
+            <tr>
+                <th>टोकन</th>
+                <th>नाम</th>
+                <th>फोन</th>
+                <th>तहसील</th>
+                <th>ग्राम</th>
+                <th>वितरण केंद्र का नाम</th>
+                <th>बही अनुसार रकवा</th>
+                <th>बही क्रमांक</th>
+                <th>समग्र</th>
+                <th>तारीख</th>
 
+                <th>दिया गया समय </th>
+                <th>दी गयी तारिख</th>
+
+                <th>कारण</th>
+
+
+            </tr>
             <?php
             $select = "select * from kisaan where status = 'unverified'";
             $result = mysqli_query($connection, $select);
@@ -155,42 +202,28 @@ if ($_SESSION['username'] != "admin")
                 $name = $row['name'];
                 $phone = $row['phone'];
                 $tahseel = $row['tahseel'];
+                $gram = $row['gram'];
                 $vitrank = $row['vitrankendra'];
                 $rakva = $row['rakva'];
                 $bahi = $row['bahi'];
                 $samagra = $row['samagra'];
                 $date = $row['date'];
-                $status = $row['status'];
                 $ta = $row['timealloted'];
                 $da = $row['datealloted'];
 
+                $reason = $row['reason'];
 
 
             ?>
 
-                <tr>
-                    <th></th>
-                    <th>नाम</th>
-                    <th>फोन</th>
-                    <th>तहसील ग्राम</th>
-                    <th>वितरण केंद्र का नाम</th>
-                    <th>बही अनुसार रकवा</th>
-                    <th>बही क्रमांक</th>
-                    <th>समग्र</th>
-                    <th>तारीख</th>
 
-                    <th>दिया गया समय </th>
-                    <th>दी गयी तारिख</th>
-                    <th>स्थिति</th>
-
-
-                </tr>
 
                 <tr>
-                    <td><input type="number" value="<?php echo $token; ?>" hidden name="token"></td>
+                    <td><input type="number" value="<?php echo $token; ?>" name="token"></td>
                     <td><input type="text" value="<?php echo $name; ?>" name="name"></td>
                     <td><input type="number" value="<?php echo $phone; ?>" name="phone"></td>
                     <td><input type="text" value="<?php echo $tahseel; ?>" name="tahseel"></td>
+                    <td><input type="text" value="<?php echo $gram; ?>" name="gram"></td>
                     <td><input type="text" value="<?php echo $vitrank; ?>" name="vitrank"></td>
                     <td><input type="text" value="<?php echo $rakva; ?>" pattern="[0-9]+(\.[0-9]+)?" name="rakva"></td>
                     <td><input type="number" value="<?php echo $bahi; ?>" name="bahi"></td>
@@ -198,31 +231,9 @@ if ($_SESSION['username'] != "admin")
                     <td><input type="text" value="<?php echo $date; ?> " disabled name="date"></td>
                     <td><input type="text" value="<?php echo $da; ?> " name="da"></td>
                     <td><input type="text" value="<?php echo $ta; ?> " name="ta"></td>
-                    <td>
-                        <select name="status">
-                            <option value="<?php echo $status; ?>">लंबित</option>
-                            <option value="verified">प्रमाणित</option>
-                            <option value="unverified">अप्रमाणित</option>
-                            <option value="deleted">हटाएं</option>
-                        </select>
 
-                    <td>
-                        <button class="btn btn-success" onclick="status(this)" id="update" data-id='<?php echo $token; ?>' data-name='<?php echo $name ?>' data-phone="<?php echo $phone ?>" data-tahseel="<?php echo $tahseel ?>" data-vitrank="<?php echo $vitrankendra ?>" data-rakva="<?php echo $rakva ?>" data-bahi="<?php echo $bahi ?>" data-samagra="<?php echo $samagra ?>" data-date="<?php echo $date ?>" data-status="<?php echo $status; ?>" data-da="<?php echo $da; ?>" data-ta="<?php echo $ta; ?>">
-                            सत्यापित करें
-                        </button>
-                    </td>
+                    <td><input type="text" value="<?php echo $reason; ?> " name="reason"></td>
 
-
-                <tr>
-                    <td>
-                        <form action="db/download-data.php" method="get">
-                            <input type="text" name="table" value="unverified" hidden>
-                            <input type="submit" value="download as excel">
-                        </form>
-                        <button onclick="downloadSheet(this)" id="download-unverified" class="bg-gradient bg-warning p-3" data-id='<?php echo $token; ?>' data-name='<?php echo $name ?>' data-phone="<?php echo $phone ?>" data-tahseel="<?php echo $tahseel ?>" data-vitrank="<?php echo $vitrankendra ?>" data-rakva="<?php echo $rakva ?>" data-bahi="<?php echo $bahi ?>" data-samagra="<?php echo $samagra ?>" data-date="<?php echo $date ?>" data-status="<?php echo $status; ?>" data-da="<?php echo $da; ?>" data-ta="<?php echo $ta; ?>">जानकारी डाउनलोड करें</button>
-                    </td>
-
-                </tr>
 
                 </tr>
             <?php
@@ -230,12 +241,36 @@ if ($_SESSION['username'] != "admin")
 
             }
             ?>
+            <tr>
+                <td>
+                    <form action="db/download-data.php" method="get">
+                        <input type="text" name="table" value="unverified" hidden>
+                        <input type="submit" value="download as excel">
+                    </form>
+                </td>
+            </tr>
         </table>
 
 
         <!-- deleted data -->
         <table class="table-responsive data-tables" id="deleted-data-table">
-            <th class="bg-success text-white p-3 mb-2">Deleted kisaan</th>
+            <tr>
+                <th>टोकन</th>
+                <th>नाम</th>
+                <th>फोन</th>
+                <th>तहसील</th>
+                <th>ग्राम</th>
+                <th>वितरण केंद्र का नाम</th>
+                <th>बही अनुसार रकवा</th>
+                <th>बही क्रमांक</th>
+                <th>समग्र</th>
+                <th>तारीख</th>
+
+                <th>दिया गया समय </th>
+                <th>दी गयी तारिख</th>
+
+                <th>कारण</th>
+            </tr>
 
             <?php
             $select = "select * from kisaan where status = 'deleted'";
@@ -250,65 +285,43 @@ if ($_SESSION['username'] != "admin")
                 $name = $row['name'];
                 $phone = $row['phone'];
                 $tahseel = $row['tahseel'];
+                $gram = $row['gram'];
                 $vitrank = $row['vitrankendra'];
                 $rakva = $row['rakva'];
                 $bahi = $row['bahi'];
                 $samagra = $row['samagra'];
                 $date = $row['date'];
-                $status = $row['status'];
+
                 $ta = $row['timealloted'];
                 $da = $row['datealloted'];
-
+                $reason = $row['reason'];
 
 
             ?>
 
-                <tr>
-                    <th></th>
-                    <th>नाम</th>
-                    <th>फोन</th>
-                    <th>तहसील ग्राम</th>
-                    <th>वितरण केंद्र का नाम</th>
-                    <th>बही अनुसार रकवा</th>
-                    <th>बही क्रमांक</th>
-                    <th>समग्र</th>
-                    <th>तारीख</th>
-
-                    <th>दिया गया समय </th>
-                    <th>दी गयी तारिख</th>
-                    <th>स्थिति</th>
-                </tr>
-
-                <tr>
-                    <td><input type="number" value="<?php echo $row['token']; ?>" hidden name="token"></td>
-                    <td><input type="text" value="<?php echo $row['name']; ?>" name="name"></td>
-                    <td><input type="number" value="<?php echo $row['phone']; ?>" name="phone"></td>
-                    <td><input type="text" value="<?php echo $row['tahseel']; ?>" name="tahseel"></td>
-                    <td><input type="text" value="<?php echo $row['vitrankendra']; ?>" name="vitrank"></td>
-                    <td><input type="text" value="<?php echo $row['rakva']; ?>" name="rakva"></td>
-                    <td><input type="number" value="<?php echo $row['bahi']; ?>" name="bahi"></td>
-                    <td><input type="number" value="<?php echo $row['samagra']; ?>" name="samagra"></td>
-                    <td><input type="text" value="<?php echo $row['date']; ?> " name="date"></td>
-                    <td><input type="text" value="<?php echo $row['timealloted']; ?> " name="time"></td>
-                    <td><input type="text" value="<?php echo $row['datealloted']; ?> " name="date"></td>
-                    <td><input type="text" value="<?php echo $row['status']; ?> " name="status"></td>
-
-
-                    <td>
-                        <button class="btn btn-success" onclick="status(this)" id="update" data-id='<?php echo $token; ?>' data-name='<?php echo $name ?>' data-phone="<?php echo $phone ?>" data-tahseel="<?php echo $tahseel ?>" data-vitrank="<?php echo $vitrankendra ?>" data-rakva="<?php echo $rakva ?>" data-bahi="<?php echo $bahi ?>" data-samagra="<?php echo $samagra ?>" data-date="<?php echo $date ?>" data-status="<?php echo $status; ?>" data-da="<?php echo $da; ?>" data-ta="<?php echo $ta; ?>">
-                            सत्यापित करें
-                        </button>
-                    </td>
 
 
                 <tr>
-                    <td>
-                        <form action="db/download-data.php" method="get">
-                            <input type="text" name="table" value="deleted" hidden>
-                            <input type="submit" value="download as excel">
-                        </form>
-                        <button onclick="downloadSheet(this)" id="download-deleted" class="bg-gradient bg-warning p-3" data-id='<?php echo $token; ?>' data-name='<?php echo $name ?>' data-phone="<?php echo $phone ?>" data-tahseel="<?php echo $tahseel ?>" data-vitrank="<?php echo $vitrankendra ?>" data-rakva="<?php echo $rakva ?>" data-bahi="<?php echo $bahi ?>" data-samagra="<?php echo $samagra ?>" data-date="<?php echo $date ?>" data-status="<?php echo $status; ?>" data-da="<?php echo $da; ?>" data-ta="<?php echo $ta; ?>">जानकारी डाउनलोड करें</button>
-                    </td>
+                    <td><input type="number" value="<?php echo $token; ?>" name="token"></td>
+                    <td><input type="text" value="<?php echo $name; ?>" name="name"></td>
+                    <td><input type="number" value="<?php echo $phone; ?>" name="phone"></td>
+                    <td><input type="text" value="<?php echo $tahseel; ?>" name="tahseel"></td>
+                    <td><input type="text" value="<?php echo $gram; ?>" name="gram"></td>
+                    <td><input type="text" value="<?php echo $vitrank; ?>" name="vitrank"></td>
+                    <td><input type="text" value="<?php echo $rakva; ?>" name="rakva"></td>
+                    <td><input type="number" value="<?php echo $bahi; ?>" name="bahi"></td>
+                    <td><input type="number" value="<?php echo $samagra; ?>" name="samagra"></td>
+                    <td><input type="text" value="<?php echo $date; ?> " name="date"></td>
+                    <td><input type="text" value="<?php echo $ta; ?> " name="time"></td>
+                    <td><input type="text" value="<?php echo $da; ?> " name="date"></td>
+
+                    <td><input type="text" value="<?php echo $reason; ?> " name="reason"></td>
+
+
+
+
+
+                <tr>
 
                 </tr>
 
@@ -318,18 +331,25 @@ if ($_SESSION['username'] != "admin")
 
             }
             ?>
+            <td>
+                <form action="db/download-data.php" method="get">
+                    <input type="text" name="table" value="deleted" hidden>
+                    <input type="submit" value="download as excel">
+                </form>
+            </td>
         </table>
 
         <!-- Data table by default is hide -->
 
 
-        <table class="table-responsive data-tables" id="data-table">
+        <table class="table-responsive data-tables" id="ad-data-table">
 
             <tr class="bg-success text-white">
-                <th></th>
+                <th>टोकन</th>
                 <th>नाम</th>
                 <th>फोन</th>
-                <th>तहसील ग्राम</th>
+                <th>तहसील</th>
+                <th>ग्राम</th>
                 <th>वितरण केंद्र का नाम</th>
                 <th>बही अनुसार रकवा</th>
                 <th>बही क्रमांक</th>
@@ -355,22 +375,24 @@ if ($_SESSION['username'] != "admin")
                 $name = $row['name'];
                 $phone = $row['phone'];
                 $tahseel = $row['tahseel'];
+                $gram = $row['gram'];
                 $vitrank = $row['vitrankendra'];
                 $rakva = $row['rakva'];
                 $bahi = $row['bahi'];
                 $samagra = $row['samagra'];
                 $date = $row['date'];
-                $status = $row['status'];
                 $ta = $row['timealloted'];
                 $da = $row['datealloted'];
+                $status = $row['status'];
 
             ?>
 
                 <tr>
-                    <td><input type="number" value="<?php echo $token; ?>" hidden name="token"></td>
+                    <td><input type="number" value="<?php echo $token; ?>" name="token"></td>
                     <td><input type="text" value="<?php echo $name; ?>" name="name"></td>
                     <td><input type="number" value="<?php echo $phone; ?>" name="phone"></td>
                     <td><input type="text" value="<?php echo $tahseel; ?>" name="tahseel"></td>
+                    <td><input type="text" value="<?php echo $gram; ?>" name="gram"></td>
                     <td><input type="text" value="<?php echo $vitrank; ?>" name="vitrank"></td>
                     <td><input type="text" value="<?php echo $rakva; ?>" pattern="[0-9]+(\.[0-9]+)?" name="rakva"></td>
                     <td><input type="number" value="<?php echo $bahi; ?>" name="bahi"></td>
@@ -378,19 +400,13 @@ if ($_SESSION['username'] != "admin")
                     <td><input type="text" value="<?php echo $date; ?> " disabled name="date"></td>
                     <td><input type="text" value="<?php echo $da; ?> " name="da"></td>
                     <td><input type="text" value="<?php echo $ta; ?> " name="ta"></td>
+
+
                     <td>
-                        <select name="status">
-                            <option value="<?php echo $status; ?>">लंबित</option>
-                            <option value="verified">प्रमाणित</option>
-                            <option value="unverified">अप्रमाणित</option>
-                            <option value="deleted">हटाएं</option>
-                        </select>
+                        <input type="text" name="status" id="status" value="<?php echo $status; ?>">
+
                     </td>
-                    <td>
-                        <button class="btn btn-success" onclick="status(this)" id="update" data-id='<?php echo $token; ?>' data-name='<?php echo $name ?>' data-phone="<?php echo $phone ?>" data-tahseel="<?php echo $tahseel ?>" data-vitrank="<?php echo $vitrank ?>" data-rakva="<?php echo $rakva ?>" data-bahi="<?php echo $bahi ?>" data-samagra="<?php echo $samagra ?>" data-date="<?php echo $date ?>" data-status="<?php echo $status; ?>" data-da="<?php echo $da; ?>" data-ta="<?php echo $ta; ?>">
-                            सत्यापित करें
-                        </button>
-                    </td>
+
                 </tr>
             <?php } ?>
             <tr>
@@ -401,7 +417,6 @@ if ($_SESSION['username'] != "admin")
                         <input type="submit" value="download as excel">
                     </form>
 
-                    <button onclick="downloadSheet(this)" id="download-all" class="btn btn-warning bg-gradient p-3" data-id='<?php echo $token; ?>' data-name='<?php echo $name ?>' data-phone="<?php echo $phone ?>" data-tahseel="<?php echo $tahseel ?>" data-vitrank="<?php echo $vitrankendra ?>" data-rakva="<?php echo $rakva ?>" data-bahi="<?php echo $bahi ?>" data-samagra="<?php echo $samagra ?>" data-date="<?php echo $date ?>" data-status="<?php echo $status; ?>" data-da="<?php echo $da; ?>" data-ta="<?php echo $ta; ?>">जानकारी डाउनलोड करें</button>
                 </td>
             </tr>
 

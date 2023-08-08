@@ -24,31 +24,37 @@ if ($_GET["table"] == "all") {
     $sheet = $spreadsheet->getActiveSheet();
 
     // Set headers for the Excel file
-    $sheet->setCellValue('A1', 'name');
-    $sheet->setCellValue('B1', 'tahseel');
-    $sheet->setCellValue('C1', 'vitran kendra');
-    $sheet->setCellValue('D1', 'phone');
-    $sheet->setCellValue('E1', 'samagra');
-    $sheet->setCellValue('F1', 'bahi');
-    $sheet->setCellValue('G1', 'rakva');
-    $sheet->setCellValue('H1', 'date of registration');
-    $sheet->setCellValue('I1', 'alloted date');
-    $sheet->setCellValue('J1', 'alloted time');
+    $sheet->setCellValue('A1', 'तारीख');
+    $sheet->setCellValue('B1', 'टोकन');
+    $sheet->setCellValue('C1', 'नाम');
+    $sheet->setCellValue('D1', 'फोन');
+    $sheet->setCellValue('E1', 'समग्र');
+    $sheet->setCellValue('F1', 'बही क्रमांक');
+    $sheet->setCellValue('G1', 'बही अनुसार रकवा');
+    $sheet->setCellValue('H1', 'तहसील');
+    $sheet->setCellValue('I1', 'ग्राम');
+    $sheet->setCellValue('J1', 'वितरण केंद्र का नाम');
+    $sheet->setCellValue('K1', 'दी गयी तारिख');
+    $sheet->setCellValue('L1', 'दिया गया समय');
     // Add more headers as needed
 
+    
     // Loop through the database result and populate the Excel sheet
     $row = 2; // Start from the second row since the first row is for headers
     while ($data = mysqli_fetch_assoc($result)) {
-        $sheet->setCellValue('A' . $row, $data['name']);
-        $sheet->setCellValue('B' . $row, $data['tahseel']);
-        $sheet->setCellValue('C' . $row, $data['vitrankendra']);
+        $sheet->setCellValue('A' . $row, $data['date']);
+        $sheet->setCellValue('B' . $row, $data['token']);
+        $sheet->setCellValue('C' . $row, $data['name']);
         $sheet->setCellValue('D' . $row, $data['phone']);
         $sheet->setCellValue('E' . $row, $data['samagra']);
         $sheet->setCellValue('F' . $row, $data['bahi']);
         $sheet->setCellValue('G' . $row, $data['rakva']);
-        $sheet->setCellValue('H' . $row, $data['date']);
-        $sheet->setCellValue('I' . $row, $data['datealloted']);
-        $sheet->setCellValue('J' . $row, $data['timealloted']);
+        $sheet->setCellValue('H' . $row, $data['tahseel']);
+        $sheet->setCellValue('I' . $row, $data['gram']);
+        $sheet->setCellValue('J' . $row, $data['vitrankendra']);
+        $sheet->setCellValue('K' . $row, $data['datealloted']);
+        $sheet->setCellValue('L' . $row, $data['timealloted']);
+
         // Add more cells as needed
         $row++;
     }
@@ -75,31 +81,37 @@ if ($_GET["table"] == "verified") {
     $sheet = $spreadsheet->getActiveSheet();
 
     // Set headers for the Excel file
-    $sheet->setCellValue('A1', 'name');
-    $sheet->setCellValue('B1', 'tahseel');
-    $sheet->setCellValue('C1', 'vitran kendra');
-    $sheet->setCellValue('D1', 'phone');
-    $sheet->setCellValue('E1', 'samagra');
-    $sheet->setCellValue('F1', 'bahi');
-    $sheet->setCellValue('G1', 'rakva');
-    $sheet->setCellValue('H1', 'date of registration');
-    $sheet->setCellValue('I1', 'alloted date');
-    $sheet->setCellValue('J1', 'alloted time');
+    $sheet->setCellValue('A1', 'तारीख');
+    $sheet->setCellValue('B1', 'टोकन');
+    $sheet->setCellValue('C1', 'नाम');
+    $sheet->setCellValue('D1', 'फोन');
+    $sheet->setCellValue('E1', 'समग्र');
+    $sheet->setCellValue('F1', 'बही क्रमांक');
+    $sheet->setCellValue('G1', 'बही अनुसार रकवा');
+    $sheet->setCellValue('H1', 'तहसील');
+    $sheet->setCellValue('I1', 'ग्राम');
+    $sheet->setCellValue('J1', 'वितरण केंद्र का नाम');
+    $sheet->setCellValue('K1', 'दी गयी तारिख');
+    $sheet->setCellValue('L1', 'दिया गया समय');
     // Add more headers as needed
 
+   
     // Loop through the database result and populate the Excel sheet
     $row = 2; // Start from the second row since the first row is for headers
     while ($data = mysqli_fetch_assoc($result)) {
-        $sheet->setCellValue('A' . $row, $data['name']);
-        $sheet->setCellValue('B' . $row, $data['tahseel']);
-        $sheet->setCellValue('C' . $row, $data['vitrankendra']);
+        $sheet->setCellValue('A' . $row, $data['date']);
+        $sheet->setCellValue('B' . $row, $data['token']);
+        $sheet->setCellValue('C' . $row, $data['name']);
         $sheet->setCellValue('D' . $row, $data['phone']);
         $sheet->setCellValue('E' . $row, $data['samagra']);
         $sheet->setCellValue('F' . $row, $data['bahi']);
         $sheet->setCellValue('G' . $row, $data['rakva']);
-        $sheet->setCellValue('H' . $row, $data['date']);
-        $sheet->setCellValue('I' . $row, $data['datealloted']);
-        $sheet->setCellValue('J' . $row, $data['timealloted']);
+        $sheet->setCellValue('H' . $row, $data['tahseel']);
+        $sheet->setCellValue('I' . $row, $data['gram']);
+        $sheet->setCellValue('J' . $row, $data['vitrankendra']);
+        $sheet->setCellValue('K' . $row, $data['datealloted']);
+        $sheet->setCellValue('L' . $row, $data['timealloted']);
+
         // Add more cells as needed
         $row++;
     }
@@ -126,31 +138,37 @@ if ($_GET["table"] == "unverified") {
     $sheet = $spreadsheet->getActiveSheet();
 
     // Set headers for the Excel file
-    $sheet->setCellValue('A1', 'name');
-    $sheet->setCellValue('B1', 'tahseel');
-    $sheet->setCellValue('C1', 'vitran kendra');
-    $sheet->setCellValue('D1', 'phone');
-    $sheet->setCellValue('E1', 'samagra');
-    $sheet->setCellValue('F1', 'bahi');
-    $sheet->setCellValue('G1', 'rakva');
-    $sheet->setCellValue('H1', 'date of registration');
-    $sheet->setCellValue('I1', 'alloted date');
-    $sheet->setCellValue('J1', 'alloted time');
+    $sheet->setCellValue('A1', 'तारीख');
+    $sheet->setCellValue('B1', 'टोकन');
+    $sheet->setCellValue('C1', 'नाम');
+    $sheet->setCellValue('D1', 'फोन');
+    $sheet->setCellValue('E1', 'समग्र');
+    $sheet->setCellValue('F1', 'बही क्रमांक');
+    $sheet->setCellValue('G1', 'बही अनुसार रकवा');
+    $sheet->setCellValue('H1', 'तहसील');
+    $sheet->setCellValue('I1', 'ग्राम');
+    $sheet->setCellValue('J1', 'वितरण केंद्र का नाम');
+    $sheet->setCellValue('K1', 'दी गयी तारिख');
+    $sheet->setCellValue('L1', 'दिया गया समय');
+    $sheet->setCellValue('M1', 'कारण');
     // Add more headers as needed
 
     // Loop through the database result and populate the Excel sheet
     $row = 2; // Start from the second row since the first row is for headers
     while ($data = mysqli_fetch_assoc($result)) {
-        $sheet->setCellValue('A' . $row, $data['name']);
-        $sheet->setCellValue('B' . $row, $data['tahseel']);
-        $sheet->setCellValue('C' . $row, $data['vitrankendra']);
+        $sheet->setCellValue('A' . $row, $data['date']);
+        $sheet->setCellValue('B' . $row, $data['token']);
+        $sheet->setCellValue('C' . $row, $data['name']);
         $sheet->setCellValue('D' . $row, $data['phone']);
         $sheet->setCellValue('E' . $row, $data['samagra']);
         $sheet->setCellValue('F' . $row, $data['bahi']);
         $sheet->setCellValue('G' . $row, $data['rakva']);
-        $sheet->setCellValue('H' . $row, $data['date']);
-        $sheet->setCellValue('I' . $row, $data['datealloted']);
-        $sheet->setCellValue('J' . $row, $data['timealloted']);
+        $sheet->setCellValue('H' . $row, $data['tahseel']);
+        $sheet->setCellValue('I' . $row, $data['gram']);
+        $sheet->setCellValue('J' . $row, $data['vitrankendra']);
+        $sheet->setCellValue('K' . $row, $data['datealloted']);
+        $sheet->setCellValue('L' . $row, $data['timealloted']);
+        $sheet->setCellValue('M' . $row, $data['reason']);
         // Add more cells as needed
         $row++;
     }
@@ -177,31 +195,37 @@ if ($_GET["table"] == "deleted") {
     $sheet = $spreadsheet->getActiveSheet();
 
     // Set headers for the Excel file
-    $sheet->setCellValue('A1', 'name');
-    $sheet->setCellValue('B1', 'tahseel');
-    $sheet->setCellValue('C1', 'vitran kendra');
-    $sheet->setCellValue('D1', 'phone');
-    $sheet->setCellValue('E1', 'samagra');
-    $sheet->setCellValue('F1', 'bahi');
-    $sheet->setCellValue('G1', 'rakva');
-    $sheet->setCellValue('H1', 'date of registration');
-    $sheet->setCellValue('I1', 'alloted date');
-    $sheet->setCellValue('J1', 'alloted time');
+    $sheet->setCellValue('A1', 'तारीख');
+    $sheet->setCellValue('B1', 'टोकन');
+    $sheet->setCellValue('C1', 'नाम');
+    $sheet->setCellValue('D1', 'फोन');
+    $sheet->setCellValue('E1', 'समग्र');
+    $sheet->setCellValue('F1', 'बही क्रमांक');
+    $sheet->setCellValue('G1', 'बही अनुसार रकवा');
+    $sheet->setCellValue('H1', 'तहसील');
+    $sheet->setCellValue('I1', 'ग्राम');
+    $sheet->setCellValue('J1', 'वितरण केंद्र का नाम');
+    $sheet->setCellValue('K1', 'दी गयी तारिख');
+    $sheet->setCellValue('L1', 'दिया गया समय');
+    $sheet->setCellValue('M1', 'कारण');
     // Add more headers as needed
 
     // Loop through the database result and populate the Excel sheet
     $row = 2; // Start from the second row since the first row is for headers
     while ($data = mysqli_fetch_assoc($result)) {
-        $sheet->setCellValue('A' . $row, $data['name']);
-        $sheet->setCellValue('B' . $row, $data['tahseel']);
-        $sheet->setCellValue('C' . $row, $data['vitrankendra']);
+        $sheet->setCellValue('A' . $row, $data['date']);
+        $sheet->setCellValue('B' . $row, $data['token']);
+        $sheet->setCellValue('C' . $row, $data['name']);
         $sheet->setCellValue('D' . $row, $data['phone']);
         $sheet->setCellValue('E' . $row, $data['samagra']);
         $sheet->setCellValue('F' . $row, $data['bahi']);
         $sheet->setCellValue('G' . $row, $data['rakva']);
-        $sheet->setCellValue('H' . $row, $data['date']);
-        $sheet->setCellValue('I' . $row, $data['datealloted']);
-        $sheet->setCellValue('J' . $row, $data['timealloted']);
+        $sheet->setCellValue('H' . $row, $data['tahseel']);
+        $sheet->setCellValue('I' . $row, $data['gram']);
+        $sheet->setCellValue('J' . $row, $data['vitrankendra']);
+        $sheet->setCellValue('K' . $row, $data['datealloted']);
+        $sheet->setCellValue('L' . $row, $data['timealloted']);
+        $sheet->setCellValue('M' . $row, $data['reason']);
         // Add more cells as needed
         $row++;
     }
@@ -209,6 +233,43 @@ if ($_GET["table"] == "deleted") {
     // Set headers for the Excel file
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header('Content-Disposition: attachment; filename="deleted-data.xlsx"');
+
+    // Save the Excel file to output stream
+    $writer = new Xlsx($spreadsheet);
+    $writer->save('php://output');
+}
+if ($_GET["table"] == "sms") {
+    // Query the data you want to export
+    $sql = 'SELECT * FROM kisaan';
+    $result = mysqli_query($connection, $sql);
+
+    // Create a new Spreadsheet object
+    $spreadsheet = new Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+
+    // Set headers for the Excel file
+
+    $sheet->setCellValue('A1', 'नाम');
+    $sheet->setCellValue('B1', 'फोन');
+
+    $sheet->setCellValue('C1', 'सन्देश');
+    // Add more headers as needed
+
+   
+    // Loop through the database result and populate the Excel sheet
+    $row = 2; // Start from the second row since the first row is for headers
+    while ($data = mysqli_fetch_assoc($result)) {
+        $sheet->setCellValue('A' . $row, $data['name']);
+        $sheet->setCellValue('B' . $row, $data['phone']);
+        $sheet->setCellValue('C' . $row, $data['message']);
+
+        // Add more cells as needed
+        $row++;
+    }
+
+    // Set headers for the Excel file
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment; filename="sms-data.xlsx"');
 
     // Save the Excel file to output stream
     $writer = new Xlsx($spreadsheet);

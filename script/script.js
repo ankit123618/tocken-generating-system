@@ -49,8 +49,12 @@ function kisaanScript(ele) {
                         window.location = "index.php"
                     }, 5000)
                 }
-                else
-                    window.location = "operator-dash.php"
+                else {
+                    setTimeout(() => {
+                        window.location = "operator-dash.php"
+                    }, 5000)
+
+                }
             }
         }
 
@@ -60,6 +64,7 @@ function kisaanScript(ele) {
     })
 }
 
+// LOGIN FUNCTIONS FOR ADMIN & OPERATOR
 function adminScript() {
     adminForm.addEventListener("submit", (event) => {
         event.preventDefault()
@@ -145,9 +150,20 @@ function showData(ele) {
     let bid = ele.id
     console.log(bid);
 
-    if (bid === "all-data") {
+    if (bid === "op-all-data") {
 
-        const show = document.getElementById("data-table")
+        const show = document.getElementById("op-data-table")
+
+        if (show.style.display === "none") {
+            show.style.display = "block"; // Display the table
+        }
+        else {
+            show.style.display = "none"; // Hide the table
+        }
+    }
+    else if (bid === "ad-all-data") {
+        const show = document.getElementById("ad-data-table")
+
         if (show.style.display === "none") {
             show.style.display = "block"; // Display the table
         }
@@ -157,6 +173,7 @@ function showData(ele) {
     }
     else if (bid === "verified-data") {
         const show = document.getElementById("verified-data-table")
+
         if (show.style.display === "none") {
             show.style.display = "block"
         }
@@ -165,6 +182,7 @@ function showData(ele) {
     }
     else if (bid === "unverified-data") {
         const show = document.getElementById("unverified-data-table")
+
         if (show.style.display === "none") {
             show.style.display = "block"
         }
@@ -173,125 +191,108 @@ function showData(ele) {
     }
     else if (bid === "deleted-data") {
         const show = document.getElementById("deleted-data-table")
+
         if (show.style.display === "none") {
             show.style.display = "block"
         }
         else
             show.style.display = "none"
     }
-    // else if (bid === "vitrankendra-data") {
-    //     const show = document.getElementById("vitran-btn")
-    //     if (show.style.display === "none") {
-    //         show.style.display = "block"
-    //     }
-    //     else
-    //         show.style.display = "none"
-    // }
-    // else if (bid === "date-data") {
-    //     const show = document.getElementById("date-btn")
-    //     if (show.style.display === "none") {
-    //         show.style.display = "block"
-    //     }
-    //     else
-    //         show.style.display = "none"
-    // }
-}
+    else if (bid === "sms-data") {
+        const show = document.getElementById("sms-data-table")
 
-/*
-    FUNCTION THAT SEND DATA
-    TO VERIFIED TABLE
-*/
-function status(ele) {
-    // accessing button's data attribute value
-    const bid = ele.id  //operation value
-    const token = ele.dataset.id
-    const name = ele.dataset.name
-    const phone = ele.dataset.phone
-    const tahseel = ele.dataset.tahseel
-    const samagra = ele.dataset.samagra
-    const bahi = ele.dataset.bahi
-    const rakva = ele.dataset.rakva
-    const date = ele.dataset.date
-    const vitrank = ele.dataset.vitrank
-    const status = document.getElementById("status")
-    const ta = ele.dataset.ta
-    const da = ele.dataset.da
-
-    console.log("button is clicked & this kisaan will: " + bid);
-    console.log("token: " + token);
-    console.log("name: " + name);
-    console.log("phone: " + phone);
-    console.log("tahseel: " + tahseel);
-    console.log("samagra: " + samagra);
-    console.log("bahi: " + bahi);
-    console.log("rakva: " + rakva);
-    console.log("date: " + date);
-    console.log("vitrankendra: " + vitrank);
-    console.log("status: " + status);
-    console.log("ta: " + ta);
-    console.log("da: " + da);
-
-
-    const data = new FormData()
-    data.append("buttonid", bid)
-    data.append("kisaantn", token)
-    data.append("kisaanname", name)
-    data.append("kisaanphone", phone)
-    data.append("kisaantahseel", tahseel)
-    data.append("kisaansamagra", samagra)
-    data.append("kisaanbahi", bahi)
-    data.append("kisaanrakva", rakva)
-    data.append("kisaandate", date)
-    data.append("kisaanvitrankendra", vitrank)
-    data.append("kisaanstatus", status)
-    data.append("kisaanta", ta)
-    data.append("kisaanda", da)
-
-    for (const pair of data) {
-
-        console.log(pair[0] + " " + pair[1]);
-    }
-
-    // ajax call to update values
-    const xhr = new XMLHttpRequest
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(xhr.responseText);
-            response[0].innerHTML = xhr.responseText
-            
-            // // response shows for 5 seconds
-            // setTimeout(() => {
-            //     response[0].style.display = "none"
-            //     window.location("operator-dash.php");
-            // }, 5000);
+        if (show.style.display === "none") {
+            show.style.display = "block"
         }
+        else
+            show.style.display = "none"
     }
-
-    xhr.open('POST', 'db/status.php')
-    xhr.send(data)
-
 }
 
+    /*
+        FUNCTION THAT SEND DATA
+        TO VERIFIED TABLE
+    */
+    function status(ele) {
+        // accessing button's data attribute value
+        const bid = ele.id  //operation value
+        const token = document.getElementById("token").value
+        const name = document.getElementById("name").value
+        const phone = document.getElementById("phone").value
+        const tahseel = document.getElementById("tahseel").value
+        const samagra = document.getElementById("samagra").value
+        const bahi = document.getElementById("bahi").value
+        const rakva = document.getElementById("rakva").value
+        const date = document.getElementById("date").value
+        const vitrank = document.getElementById("vitrank").value
+        const gram = document.getElementById("gram").value
+        const status = document.getElementById("status").value
+        const reason = document.getElementById("reason").value
 
-function downloadSheet(ele) {
-    const id = ele.id
 
-    const data = new FormData()
-    data.append("id", id)
 
-    if(id == 'download-all'){
+        console.log("button is clicked & this kisaan will: " + bid);
+        console.log("token: " + token);
+        console.log("name: " + name);
+        console.log("phone: " + phone);
+        console.log("tahseel: " + tahseel);
+        console.log("samagra: " + samagra);
+        console.log("bahi: " + bahi);
+        console.log("rakva: " + rakva);
+        console.log("date: " + date);
+        console.log("vitrankendra: " + vitrank);
+        console.log("status: " + status);
+        console.log("reason: " + reason);
+        console.log("gram: " + gram);
 
-        
+        const data = new FormData()
+        data.append("buttonid", bid)
+        data.append("kisaantn", token)
+        data.append("kisaanname", name)
+        data.append("kisaanphone", phone)
+        data.append("kisaantahseel", tahseel)
+        data.append("kisaansamagra", samagra)
+        data.append("kisaanbahi", bahi)
+        data.append("kisaanrakva", rakva)
+        data.append("kisaandate", date)
+        data.append("kisaanvitrankendra", vitrank)
+        data.append("kisaanstatus", status)
+        data.append("kisaanreason", reason)
+        data.append("kisaangram", gram)
+
+        for (const pair of data.entries()) {
+
+            console.log(pair[0] + " " + pair[1]);
+        }
+
+        // ajax call to update values
         const xhr = new XMLHttpRequest
         xhr.onreadystatechange = () => {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                
+                console.log(xhr.responseText);
+                response[0].innerHTML = xhr.responseText
+
+                // response shows for 5 seconds
+                setTimeout(() => {
+                    response[0].style.display = "none"
+                    window.location("operator-dash.php");
+                }, 5000);
             }
         }
-    
-        xhr.open('POST', 'db/download-data.php')
-        xhr.send(data)
-    
-    }
-}
 
+        xhr.open('POST', 'db/status.php')
+        xhr.send(data)
+
+    }
+
+
+
+    function toggleRB() {
+        const reasonBox = document.getElementById("reason")
+        const status = document.getElementById("status").value
+        console.log(reasonBox);
+        console.log(status);
+        if (status == "verified" && status == "pending") {
+            reasonBox.style.background = "red";
+        }
+    }
